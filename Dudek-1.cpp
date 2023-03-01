@@ -95,18 +95,23 @@ int zad3() {
     cout <<"Podaj wielkosc piramidy" << endl;
     cin >> pietra;
 
-    for (int i = 0; i < pietra; i++)
+    for (int i = 1; i <= pietra; i++)
     {
-        cout << "\n";
-        for (int j = 0; i < pietra; i++)
+        for (int k = 1; k <= pietra - i; k++)
         {
-            if ()
-            {
-                /* code */
-            }
             cout << " ";
         }
         
+        for (int j = 1; j <= i; j++)
+        {
+            cout << "*";
+            if (j < i)
+            {
+                cout << " ";
+            }
+            
+        }
+        cout << endl;
     }
     
 
