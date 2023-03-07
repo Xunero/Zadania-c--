@@ -71,19 +71,14 @@ int zad3() {
     return 0;
 }
 
-int max(int array[50]) {
-    int bigger = array[0];
+int max(int array[50],int bigger) {
     
-    for (int i = 1; i < 50; i++)
+    if (bigger < array[50])
     {
-        if (bigger < array[i])
-        {
-            bigger = array[i];
-        }
-        
+        /* code */
     }
-        
-    return bigger;
+    
+
 }
 
 int zad4() {
@@ -94,7 +89,8 @@ int zad4() {
         ran = rand()%101;
         array[i] = ran;
     }
-    
+    bigger = array[0];
+
     bigger = max(array);
     cout <<"Liczba najwieksza to: " << bigger << endl;
 

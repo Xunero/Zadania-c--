@@ -3,6 +3,7 @@
 #include <cmath>
 using namespace std;
 #include <iomanip>
+#include <cstring>
 
 
 int kula() {
@@ -119,8 +120,73 @@ int zad3() {
 }
 
 int zad4() {
+
+    const int MAX_SIZE = 100;
+    char sentence[MAX_SIZE];
+    cout << "Podaj zdanie: ";
+    cin.getline(sentence, MAX_SIZE);
+
+    // Liczenie ilości liter, liter bez spacji oraz liter bez danego znaku
+    int letterCount = 0;
+    int letterCountWithoutSpace = 0;
+    int letterCountWithoutChar = 0;
+    char ignoredChar;
+
+    cout << "Podaj znak, ktory ma zostac zignorowany: ";
+    cin >> ignoredChar;
+    
+    for (int i = 0; i < strlen(sentence); i++) {
+        if (isalpha(sentence[i])) {
+            letterCount++;
+            if (sentence[i] != ' ') {
+                letterCountWithoutSpace++;
+            }
+            if (sentence[i] != ignoredChar) {
+                letterCountWithoutChar++;
+            }
+        }
+    }
+    cout << "Ilosc liter: " << letterCount << endl;
+    cout << "Ilosc liter bez spacji: " << letterCountWithoutSpace << endl;
+    cout << "Ilosc liter bez '" << ignoredChar << "': " << letterCountWithoutChar << endl;
+
+    // Wypisywanie wyrazów w zdaniu
+    cout << "Wyrazy w zdaniu:" << endl;
+    char* word = strtok(sentence, " ");
+    while (word != nullptr) {
+        cout << word << endl;
+        word = strtok(nullptr, " ");
+    }
+
+    // Dzielenie zdania na części w oparciu o znak
+    const char DELIMITER = ',';
+    char** parts = nullptr;
+    int partsCount = 0;
+    word = strtok(sentence, &DELIMITER);
+    while (word != nullptr) {
+        char** newParts = new char*[partsCount+1];
+        for (int i = 0; i < partsCount; i++) {
+            newParts[i] = parts[i];
+        }
+        newParts[partsCount] = new char[strlen(word)+1];
+        strcpy(newParts[partsCount], word);
+        delete[] parts;
+        parts = newParts;
+        partsCount++;
+        word = strtok(nullptr, &DELIMITER);
+    }
+
+    // Wypisywanie części zdania
+    cout << "Czesci zdania oddzielone '" << DELIMITER << "':" << endl;
+    for (int i = 0; i < partsCount; i++) {
+        cout << parts[i] << endl;
+        delete[] parts[i];
+    }
+    delete[] parts;
+
     return 0;
 }
+
 
 int main() {
     cout << "Wybierz zadanie 1-4" << endl;
