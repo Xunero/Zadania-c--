@@ -1,10 +1,9 @@
 #include <iostream>
 #define _USE_MATH_DEFINES
 #include <cmath>
-using namespace std;
 #include <iomanip>
 #include <cstring>
-
+using namespace std;
 
 int kula() {
     float promien;
@@ -35,7 +34,7 @@ int prosto() {
 
 int stozek() {
     float promien,tworzaca,wysokosc;
-    cout << "Podaj promien,wysokosc oraz tworzaca stozka" << endl;
+    cout << "Podaj promien,wysokosc oraz tworzaca stozka " << endl;
     cin >> wysokosc;
     cin >> promien;
     cin >> tworzaca;
@@ -47,8 +46,21 @@ int stozek() {
     return 0;
 }
 
+int walec() {
+    float promien, wysokosc;
+    cout << "Podaj promien i wysokosc " << endl;
+    cin >> promien;
+    cin >> wysokosc;
+
+    float objetosc = M_PI*pow(promien,2)*wysokosc;
+    float pole = 2 * M_PI * pow(promien,2) + 2* M_PI* promien * wysokosc;
+
+    cout <<"Objetosc walec = " << objetosc << "\nPole walec = " << pole << endl;
+    return 0;
+}
+
 int zad1() {
-    cout << "1.Kula \n2.Prostopadloscian \n3.Stozek" << endl;
+    cout << "1.Kula \n2.Prostopadloscian \n3.Stozek\n 4. Walec" << endl;
     int wybor;
     cin >> wybor;
 
@@ -62,6 +74,9 @@ int zad1() {
         case 3:
             stozek();
             break;
+        case 4:
+            walec();
+            break;    
         default:
             break;
     }
@@ -69,17 +84,25 @@ int zad1() {
 } 
 
 int zad2() {
-    int ilosc,suma = 0;
+    int ilosc=0,suma = 0;
     float ocena,srednia;
-    cout <<" Ile ocen chcesz podac ?" << endl;
-    cin >> ilosc;
+
+    cout <<"Wpisz 0 aby przestac" << endl; // bez pytania ilu az 0
     cout << "Oceny: " << endl;
 
-    for (int i = 0; i <= ilosc-1; i++)
+    do
     {
         cin >> ocena;
-        suma = ocena + suma;
-    }
+        if (ocena > 0)
+        {
+            suma = ocena + suma;
+            ilosc++;
+        }
+
+    } while (ocena > 0);
+    
+
+    
     
     srednia = suma / (float)ilosc ;
     cout << "Srednia ocen to: " << endl;
@@ -92,17 +115,46 @@ int zad2() {
 }
 
 int zad3() {
-    int pietra;
-    cout <<"Podaj wielkosc piramidy" << endl;
+    int pietra,how;
+    cout <<"Podaj wielkosc piramidy" << endl; // stoi jak stoi czy na glowie 
     cin >> pietra;
+    cout << "Ma stac normalnie czy na glowie 1/2" << endl;
+    cin >> how;
 
-    for (int i = 1; i <= pietra; i++)
+    if (how != 1 || how !=2)
     {
+        cout << "Ma stac normalnie czy na glowie 1/2, wprowadza 1 albo 2" << endl;
+        cin >> how;
+    }
+    
+    if (how == 1)
+    {
+        for (int i = 1; i <= pietra; i++)
+        {
+            for (int k = 1; k <= pietra - i; k++)
+            {
+                cout << " ";
+            }
+        
+            for (int j = 1; j <= i; j++)
+            {
+                cout << "*";
+                if (j < i)
+                {
+                    cout << " ";
+                }
+            
+            }
+            cout << endl;
+        }
+    }else
+    
+    for (int i = pietra; i >= 1; i--)   {
         for (int k = 1; k <= pietra - i; k++)
         {
             cout << " ";
         }
-        
+
         for (int j = 1; j <= i; j++)
         {
             cout << "*";
@@ -110,9 +162,8 @@ int zad3() {
             {
                 cout << " ";
             }
-            
         }
-        cout << endl;
+    cout << endl;
     }
     
 
@@ -120,11 +171,13 @@ int zad3() {
 }
 
 int zad4() {
-
     const int MAX_SIZE = 100;
     char sentence[MAX_SIZE];
     cout << "Podaj zdanie: ";
-    cin.getline(sentence, MAX_SIZE);
+
+
+    
+    
 
     // Liczenie ilości liter, liter bez spacji oraz liter bez danego znaku
     int letterCount = 0;
@@ -146,6 +199,7 @@ int zad4() {
             }
         }
     }
+
     cout << "Ilosc liter: " << letterCount << endl;
     cout << "Ilosc liter bez spacji: " << letterCountWithoutSpace << endl;
     cout << "Ilosc liter bez '" << ignoredChar << "': " << letterCountWithoutChar << endl;
