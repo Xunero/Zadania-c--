@@ -71,29 +71,70 @@ int zad3() {
     return 0;
 }
 
-int max(int array[50],int bigger) {
-    
-    if (bigger < array[50])
-    {
-        /* code */
+int max(int array[], int x, int bigger) {
+    if (x == 50) {
+       return bigger; 
+    } else {
+        if (bigger < array[x])  {
+            bigger = array[x];
+            max(array, x+1, bigger);
+        } else {
+            max(array, x+1, bigger);
+        }
     }
-    
-
 }
 
 int zad4() {
-    int array[50],ran,bigger;
+    int array[50], ran, bigger = 0, x = 0;
 
     for (int i = 0; i < 50; i++)
     {
         ran = rand()%101;
         array[i] = ran;
     }
-    bigger = array[0];
 
-    bigger = max(array);
-    cout <<"Liczba najwieksza to: " << bigger << endl;
+    cout <<"Najwieksza liczba to: " << max(array,x,bigger) << endl;
 
+    return 0;
+}
+
+int NWD(int liczba0, int liczba1, int dzielnik) {
+    if (liczba1 == 0)
+    {
+        return liczba0;
+    } else{
+        dzielnik = liczba1;
+        liczba1 = liczba0 % liczba1;
+        liczba0 = dzielnik;
+        NWD(liczba0,liczba1,dzielnik);
+    }    
+    
+}
+
+int zad5() {
+    int liczba0 = 0, liczba1 = 0, dzielnik = 0;
+    cout << "Podaj dwie liczby: " << endl;
+    cin >> liczba0;
+    cin >> liczba1; 
+    cout << "NWD = " << NWD(liczba0,liczba1,dzielnik) << endl;
+    return 0;
+}
+
+void hanoi(int n, char source, char destination, char auxiliary) {
+    if (n == 1) {
+        cout << "Przenies krazek z " << source << " na " << destination << endl;
+    } else {
+        hanoi(n-1, source, auxiliary, destination);
+        cout << "Przenies krazek z " << source << " na " << destination << endl;
+        hanoi(n-1, auxiliary, destination, source);
+    }
+}
+
+int zad6() {
+    int ilosc;
+    cout << "Podaj liczbe krazkow" << endl;
+    cin >> ilosc;
+    hanoi(ilosc, 'A', 'B', 'C');
     return 0;
 }
 
@@ -114,10 +155,19 @@ int main() {
     case 3:
         zad3();
         break;
+    case 4:
+        zad4();
+        break;
+    case 5:
+        zad5();
+        break;
+    case 6:
+        zad6();
+        break;
     default:
         break;
     }
 
-    if (chose < 6 && chose > 1) return 0;
+    if (chose > 6 || chose < 1) return 0;
     else main();
 }
