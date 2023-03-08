@@ -2,7 +2,8 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 #include <iomanip>
-#include <cstring>
+#include <string>
+#include <vector>
 using namespace std;
 
 int kula() {
@@ -116,7 +117,7 @@ int zad2() {
 
 int zad3() {
     int pietra,how;
-    cout <<"Podaj wielkosc piramidy" << endl; // stoi jak stoi czy na glowie 
+    cout <<"Podaj wielkosc piramidy" << endl;  
     cin >> pietra;
     cout << "Ma stac normalnie czy na glowie 1/2" << endl;
     cin >> how;
@@ -171,72 +172,91 @@ int zad3() {
 }
 
 int zad4() {
-    const int MAX_SIZE = 100;
-    char sentence[MAX_SIZE];
-    cout << "Podaj zdanie: ";
-
-
+    string sentence;
+    char delimiter;
+    char skip;
     
-    
+    cout << "Podaj zdanie: " << endl;
+    getline(cin, sentence);
 
-    // Liczenie ilości liter, liter bez spacji oraz liter bez danego znaku
-    int letterCount = 0;
-    int letterCountWithoutSpace = 0;
-    int letterCountWithoutChar = 0;
-    char ignoredChar;
+    cout << "Podaj znak do pominiecia: "<< endl;
+    cin >> delimiter;
 
-    cout << "Podaj znak, ktory ma zostac zignorowany: ";
-    cin >> ignoredChar;
-    
-    for (int i = 0; i < strlen(sentence); i++) {
+    cout << "Podaj znak do pominiecia: " << endl;
+    cin >> skip;
+
+    // policz wszystkie litery
+    int letters_all = 0;
+    for (int i = 0; i < sentence.length(); i++) {
         if (isalpha(sentence[i])) {
-            letterCount++;
-            if (sentence[i] != ' ') {
-                letterCountWithoutSpace++;
-            }
-            if (sentence[i] != ignoredChar) {
-                letterCountWithoutChar++;
+            letters_all++;
+        }
+    }
+    cout << "Ilosc liter w zdaniu (lacznie ze spacjami): " << letters_all << endl;
+
+    // policz litery bez spacji
+    int letters_no_space = 0;
+    for (int i = 0; i < sentence.length(); i++) {
+        if (isalpha(sentence[i]) && sentence[i] != ' ') {
+            letters_no_space++;
+        }
+    }
+    cout << "Ilosc liter w zdaniu (bez spacji): " << letters_no_space << endl;
+
+    // policz litery bez podanego znaku
+    int letters_no_delimiter = 0;
+    for (int i = 0; i < sentence.length(); i++) {
+        if (isalpha(sentence[i]) && sentence[i] != delimiter) {
+            letters_no_delimiter++;
+        }
+    }
+    cout << "Ilosc liter w zdaniu (bez znaku " << delimiter << "): " << letters_no_delimiter << endl;
+
+    // wypisz wszystkie wyrazy
+    cout << "Wszystkie wyrazy w zdaniu: " << endl;
+    vector<string> words;
+    string word;
+    for (int i = 0; i < sentence.length(); i++) {
+        if (sentence[i] != ' ' && sentence[i] != delimiter) {
+            word += sentence[i];
+        } else {
+            if (!word.empty()) {
+                words.push_back(word);
+                word = "";
             }
         }
     }
-
-    cout << "Ilosc liter: " << letterCount << endl;
-    cout << "Ilosc liter bez spacji: " << letterCountWithoutSpace << endl;
-    cout << "Ilosc liter bez '" << ignoredChar << "': " << letterCountWithoutChar << endl;
-
-    // Wypisywanie wyrazów w zdaniu
-    cout << "Wyrazy w zdaniu:" << endl;
-    char* word = strtok(sentence, " ");
-    while (word != nullptr) {
-        cout << word << endl;
-        word = strtok(nullptr, " ");
+    if (!word.empty()) {
+        words.push_back(word);
+    }
+    for (int i = 0; i < words.size(); i++) {
+        cout << words[i] << endl;
     }
 
-    // Dzielenie zdania na części w oparciu o znak
-    const char DELIMITER = ',';
-    char** parts = nullptr;
-    int partsCount = 0;
-    word = strtok(sentence, &DELIMITER);
-    while (word != nullptr) {
-        char** newParts = new char*[partsCount+1];
-        for (int i = 0; i < partsCount; i++) {
-            newParts[i] = parts[i];
+    // podziel zdanie na części w oparciu o podany znak
+    cout << "Podzial zdania na czesci w oparciu o znak " << skip << ": " << endl;
+    vector<string> parts;
+    word = "";
+    for (int i = 0; i < sentence.length(); i++) {
+        if (sentence[i] != skip) {
+            word += sentence[i];
+        } else {
+            if (!word.empty()) {
+                parts.push_back(word);
+                word = "";
+            }
         }
-        newParts[partsCount] = new char[strlen(word)+1];
-        strcpy(newParts[partsCount], word);
-        delete[] parts;
-        parts = newParts;
-        partsCount++;
-        word = strtok(nullptr, &DELIMITER);
     }
-
-    // Wypisywanie części zdania
-    cout << "Czesci zdania oddzielone '" << DELIMITER << "':" << endl;
-    for (int i = 0; i < partsCount; i++) {
-        cout << parts[i] << endl;
-        delete[] parts[i];
+    if (!word.empty()) {
+        parts.push_back(word);
     }
-    delete[] parts;
+    for (int i = 0; i < parts.size(); i++) {
+        cout << parts[i];
+        if (i < parts.size() - 1) {
+            cout << skip;
+        }
+    }
+    cout << endl;
 
     return 0;
 }
