@@ -175,14 +175,17 @@ int zad4() {
     string sentence;
     char delimiter;
     char skip;
-    
+
     cout << "Podaj zdanie: " << endl;
+    cin.ignore();
     getline(cin, sentence);
 
-    cout << "Podaj znak do pominiecia: "<< endl;
+    cout << "Podaj litere do pominiecia: "<< endl;
+    cin.ignore();
     cin >> delimiter;
 
     cout << "Podaj znak do pominiecia: " << endl;
+    cin.ignore();
     cin >> skip;
 
     // policz wszystkie litery
