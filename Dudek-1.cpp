@@ -181,11 +181,9 @@ int zad4() {
     getline(cin, sentence);
 
     cout << "Podaj litere do pominiecia: "<< endl;
-    cin.ignore();
     cin >> delimiter;
 
     cout << "Podaj znak do pominiecia: " << endl;
-    cin.ignore();
     cin >> skip;
 
     // policz wszystkie litery
@@ -216,7 +214,7 @@ int zad4() {
     cout << "Ilosc liter w zdaniu (bez znaku " << delimiter << "): " << letters_no_delimiter << endl;
 
     // wypisz wszystkie wyrazy
-    cout << "Wszystkie wyrazy w zdaniu: " << endl;
+    cout << "Wszystkie wyrazy w zdaniu, po pominieciu znaku "<< delimiter <<": " << endl;
     vector<string> words;
     string word;
     for (int i = 0; i < sentence.length(); i++) {
@@ -237,7 +235,7 @@ int zad4() {
     }
 
     // podziel zdanie na części w oparciu o podany znak
-    cout << "Podzial zdania na czesci w oparciu o znak " << skip << ": " << endl;
+    cout << "Podzial zdania na czesci w oparciu o znak '" << skip << "': " << endl;
     vector<string> parts;
     word = "";
     for (int i = 0; i < sentence.length(); i++) {
@@ -246,7 +244,7 @@ int zad4() {
         } else {
             if (!word.empty()) {
                 parts.push_back(word);
-                word = "";
+                word = "\n";
             }
         }
     }

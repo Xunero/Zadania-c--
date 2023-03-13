@@ -109,10 +109,88 @@ int zad2() {
 
     return 0;
 }
+const int MAX_SIZE = 10;
+
+void printMatrix(int arr[][MAX_SIZE], int size) {
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            cout << arr[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+
+int sumBelowDiagonal(int arr[][MAX_SIZE], int size) {
+    int sum = 0;
+    for (int i = 1; i < size; i++) {
+        for (int j = 0; j < i; j++) {
+            sum += arr[i][j];
+        }
+    }
+    return sum;
+}
+
+int sumAboveDiagonal(int arr[][MAX_SIZE], int size) {
+    int sum = 0;
+    for (int i = 0; i < size; i++) {
+        for (int j = i + 1; j < size; j++) {
+            sum += arr[i][j];
+        }
+    }
+    return sum;
+}
+
+int sumRow(int arr[][MAX_SIZE], int size, int row) {
+    int sum = 0;
+    for (int i = 0; i < size; i++) {
+        sum += arr[row][i];
+    }
+    return sum;
+}
+
+int sumColumn(int arr[][MAX_SIZE], int size, int column) {
+    int sum = 0;
+    for (int i = 0; i < size; i++) {
+        sum += arr[i][column];
+    }
+    return sum;
+}
 
 int zad3() {
+    int size;
+    cout << "Podaj rozmiar macierzy kwadratowej: ";
+    cin >> size;
+    int matrix[MAX_SIZE][MAX_SIZE];
 
+    cout << "Podaj elementy macierzy:\n";
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            cin >> matrix[i][j];
+        }
+    }
+
+    cout << "Macierz:\n";
+    printMatrix(matrix, size);
+
+    cout << "Suma wartosci ponizej przekatnej: " << sumBelowDiagonal(matrix, size) << endl;
+    cout << "Suma wartosci powyzej przekatnej: " << sumAboveDiagonal(matrix, size) << endl;
+
+    int index;
+    cout << "Podaj indeks wiersza lub kolumny (numeracja od 0) do zsumowania: ";
+    cin >> index;
+    if (index >= 0 && index < size) {
+        cout << "Suma wiersza " << index << ": " << sumRow(matrix, size, index) << endl;
+        cout << "Suma kolumny " << index << ": " << sumColumn(matrix, size, index) << endl;
+    } else {
+        cout << "Bledny indeks wiersza lub kolumny.\n";
+    }
+
+    return 0;
 }
+
+
+
+
 int main() {
     int chose;
 
